@@ -26,9 +26,50 @@
 
 Our task was to use a microcontroller to program something. I decided to program my microcontroller, so that when a button is pressed the motor will turn on or off.
 
-<h1>Code</h1>
+<h2>Code</h2>
 
-Text
+<h3>Pseudocode</h3>
+Start Program
+Set Motor as output
+Set Button as input
+Infinite Loop
+Is the button pressed?
+Yes → Turn on motor
+No → Turn off motor
+
+<h3>Code</h3>
+
+<pre>
+  const int buttonPin = 2;  // the number of the pushbutton pin
+const int A1A = 3;  // define pin 3 for A-1A 
+const int A1B = 4;  // define pin 4 for A-1B 
+int buttonState = 0;  // variable for reading the pushbutton status - will change
+
+void setup() {
+  pinMode(buttonPin, INPUT); // initialize the pushbutton pin as an input:
+  pinMode(A1A, OUTPUT);     // specify these pins as outputs
+  pinMode(A1B, OUTPUT);
+  digitalWrite(A1A, LOW);   // start with the motors off 
+  digitalWrite(A1B, LOW);
+}
+
+void loop() {
+  // read the state of the pushbutton value
+  buttonState = digitalRead(buttonPin);
+
+  // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+  if (buttonState == HIGH) {
+    // turn Motor on:
+    digitalWrite(A1A, HIGH);   
+    digitalWrite(A1B, LOW);
+  } else {
+    // turn Motor off:
+    digitalWrite(A1A, LOW);   // setting both pins LOW stops the motor 
+    digitalWrite(A1B, LOW);   // redundant, but doesn't hurt 
+  }
+
+}
+</pre>
 
 </xmp>
 </body>
