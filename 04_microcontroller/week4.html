@@ -24,22 +24,20 @@
 
 <h1>Microcontroller Programming </h1>
 
-Our task was to use a microcontroller to program something. I decided to program my microcontroller, so that when a button is pressed the motor will turn on or off.
+Our task was to use a microcontroller to program something. I decided to program my microcontroller, so that when a button is pressed the motor will turn on or off. The idea was that pressing the motor will bring the motor to a compelteboard stop. However, I ended up inadvertently creating a motion sensor. So, my issue was that I did not add a resistor to my breadboard. Whenver you get remotely close to the button or barely even touch it, the motor will activate. Personally, I think this is pretty cool, so I decided to leave the project the way it is.
 
-<h2>Code</h2>
-
-<h3>Pseudocode</h3>
-<br>Start Program</br>
+<h4>Pseudocode</h4>
+Start Program
 <br>Set Motor as output</br>
-<br>Set Button as input</br>
+Set Button as input
 <br>Infinite Loop</br>
-<br>Is the button pressed?</br>
+Is the button pressed?
 <br>Yes → Turn on motor</br>
-<br>No → Turn off motor</br>
+No → Turn off motor
+<br></br>
+<h4>Code</h4>
 
-<h3>Code</h3>
-
-<pre style="border:2px solid #BCBEC0; padding: 10px; font: 14px Monaco; width:80%; background: #f7f7f9;border-radius: 25px;"><code>
+<pre style="border:2px solid #BCBEC0; padding: 10px; font: 14px Monaco; width:70%; background: #f7f7f9;border-radius: 25px;"><code>
 const int buttonPin = 2;  // the number of the pushbutton pin
 const int A1A = 3;  // define pin 3 for A-1A 
 const int A1B = 4;  // define pin 4 for A-1B 
@@ -70,6 +68,19 @@ void loop() {
 
 }</code>
 </pre>
+
+<h4>Wiring</h4>
+
+<img src="https://lh4.googleusercontent.com/bRv2-MHhvdgjX9q8kyHCaueSoumqxAk63TYHbHrHuMxWOs7ZkWvC45IREL-gBjLVpT49GltDHDQkWy66Sj4ZK7_c1XLsN-9RXxgj_tSmOLpeFIGOvUi87WKnOGsUEk1K6-YSrCLNMLsm8kPzbWAaieA" alt="Image">
+  <p></p>
+
+<img src="https://lh5.googleusercontent.com/hDQZWXSweeRki7KqhGZutDjZS4UVhlfhV9FWdNdxIPcNNsn6poa7zzuOosnHZ0SY1UOGMwYLbXwGq-JP3Klyq0UB22GycoxORoA0Jx6Bh5FVgu4yyFpOSmNO1VSWwdowl0MbKIYx79-yNLnrY2y-4fM" alt="Image">
+  <p></p>
+
+<img src="https://lh3.googleusercontent.com/VWlSJ1fPiZqZOWIUsKf-3PyOtk1yYfmhs4EsOwL5iyb4u2u7U1S8YRYICBnzjzCesJ-Ckly0SMcF5BbSEnbb9msAiBt7SzUFS0BLWFA9g0g7bmT0x3jzvjnVhkOtfZVg1tvdebKkJRD08Lrw2gQB2m4" alt="Image">
+  <p></p>
+
+<h4>Circuit Diagram</h4>
 
 </xmp>
 </body>
