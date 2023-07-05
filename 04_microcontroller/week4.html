@@ -29,17 +29,17 @@ Our task was to use a microcontroller to program something. I decided to program
 <h2>Code</h2>
 
 <h3>Pseudocode</h3>
-Start Program
-Set Motor as output
-Set Button as input
-Infinite Loop
-Is the button pressed?
-Yes → Turn on motor
-No → Turn off motor
+<br>Start Program</br>
+<br>Set Motor as output</br>
+<br>Set Button as input</br>
+<br>Infinite Loop</br>
+<br>Is the button pressed?</br>
+<br>Yes → Turn on motor</br>
+<br>No → Turn off motor</br>
 
 <h3>Code</h3>
 
-<pre>
+<pre style="border:2px solid #BCBEC0; padding: 10px; font: 14px Monaco; width:80%; background: #f7f7f9;border-radius: 25px;"><code>
 const int buttonPin = 2;  // the number of the pushbutton pin
 const int A1A = 3;  // define pin 3 for A-1A 
 const int A1B = 4;  // define pin 4 for A-1B 
@@ -68,7 +68,7 @@ void loop() {
     digitalWrite(A1B, LOW);   // redundant, but doesn't hurt 
   }
 
-}
+}</code>
 </pre>
 
 </xmp>
