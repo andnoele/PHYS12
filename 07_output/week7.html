@@ -23,50 +23,163 @@
 <br> 
 
 <h1>Electronic Output Devices</h1>
+<h2>Introduction</h2>
 
-<h2>Table</h2>
-<table>
-  <tr>
-    <th>Added Water</th>
-    <th>Arduino Output</th>
-  </tr>
+<h2>Part 1</h2>
+<p>
+    The first thing I did was follow the instructions on the PHYS S-12 website to put together a basic buzzer. The only piezo buzzer left was not working, so I ended up taking another buzzer, soldering wires to it and then plugging that into my arduino board.
+</p>
+<ul>
+  <li>Code Snippet
+    <pre style="border:2px solid #BCBEC0; padding: 10px; font: 14px Monaco; width:70%; background: #f7f7f9;border-radius: 25px;"><code>
+int buzzerPin = 10;
 
-  <tr>
-    <th>0</th>
-    <th>487</th>
-  </tr>
+void setup() {
+    pinMode(buzzerPin, OUTPUT);
+}
 
-  <tr>
-    <th>5</th>
-    <th>437</th>
-  </tr>
+void loop() {
+    myTone(buzzerPin, 262, 500);
+    delay(1000);
+}
 
-  <tr>
-    <th>10</th>
-    <th>375</th>
-  </tr>
+void myTone(int pin, int frequency, int duration){ 
+    int startTime = millis();
+    int period = 1000000/frequency; 
+    while ((millis() - startTime) < duration){ 
+        digitalWrite(pin, HIGH);
+        delayMicroseconds(period/2);
+        digitalWrite(pin, LOW);
+        delayMicroseconds(period/2);
+    }
+}
+</code>
+</pre>
 
-  <tr>
-    <th>15</th>
-    <th>204</th>
-  </tr>
+  </li>
+  <li>Wiring 
+    <br></br>
+    <img src="https://lh3.googleusercontent.com/zKOhH_q9ZmvK-WURYXHCvIAyvY7rgJ8FYDtDcfubwfIQCPJ6xQBDeQjnrIaUfDcvrWl0JCZs9m8AER4CiiT4xNooEn4Pf1xjTHishM5vWNWn6o3QjMyCoh6LIb5AbMjij6U-RNaLF1T5SD2ZMz1FaQY" alt="Wiring"></li>
+  <li><a href="https://streamable.com/oegjy2">Buzzer Video</a></li>
+</ul>
 
-  <tr>
-    <th>20</th>
-    <th>193</th>
-  </tr>
+<h2>Part 2</h2>
+<p>
+  For my input device, I decided to use the motion sensor mechanism that I accidentally created before in my kinetic sculpture.
+</p>
+<ul>
+  <li>Code Snippet</li>
+    <pre style="border:2px solid #BCBEC0; padding: 10px; font: 14px Monaco; width:70%; background: #f7f7f9;border-radius: 25px;"><code>
+int buzzerPin = 10;
+const int buttonPin = 2;
+int buttonState = 0;
 
-  <tr>
-    <th>25</th>
-    <th>190</th>
-  </tr>
+void setup() {
+    pinMode(buttonPin, INPUT);
+    pinMode(buzzerPin, OUTPUT);
+}
 
-  <tr>
-    <th>30</th>
-    <th>189</th>
-  </tr>
+void loop() {
+    buttonState = digitalRead(buttonPin);
 
-</table>
+    if (buttonState == HIGH) {
+        tone(buzzerPin, 1000, 500);
+        delay(1000);
+    } else {
+        noTone(buzzerPin);
+    }
+}
+
+</code>
+</pre>
+
+  
+  <li>Wiring 
+    <br></br>
+    <img src="https://lh3.googleusercontent.com/wpZWcqONgm9K7KUbqdgyMvx7F1NhQx7CZFHQGG7rNQ8D8uqPMru2BtZaBrFxBq1K5BuHQ8cW_FCIcqYXwqHpnTAfq8OCCavl4iCbX-KFzkEQtNegIfImq-I-vyJBmo4ToReuJsOtkPUkJjTlcDsjx3U" alt="Wiring"></li>
+  
+  <li>
+    <a href="https://streamable.com/gydg11">Button Buzzer Video</a></li>
+</ul>
+
+<h2>Part 3</h2>
+<p>
+  Then, to make things a little more complicated, I decided to make it so that whenever the “motion sensor” went off, the theme from The Godfather would play.
+</p>
+<ul>
+  <li>Code Snippet
+    <pre style="border:2px solid #BCBEC0; padding: 10px; font: 14px Monaco; width:70%; background: #f7f7f9;border-radius: 25px;"><code>
+int led_pin = 13;
+int buzzer_pin = 10;
+
+struct MusicStruct {
+  int A = 550;
+  int As = 582;
+  int B = 617;
+  int C = 654;
+  int Cs = 693;
+  int D = 734;
+  int Ds = 777;
+  int E = 824;
+  int F = 873;
+  int Fs = 925;
+  int G = 980;
+  int Gs = 1003;
+  int A2 = 1100;
+  int A2s = 1165;
+  int B2 = 1234;
+  int C3 = 1308;
+  int C3s = 1385;
+  int D3 = 1555;
+}Music;
+
+struct LengthStruct {
+  float half = 0.5;
+  float one = 1.0;
+  float one_half = 1.5;
+  float two = 2.0;
+  float two_half = 2.5;
+}Length;
+
+int tempo = 400;
+
+void setup() {
+  pinMode(led_pin, OUTPUT);
+  pinMode(buzzer_pin, OUTPUT);
+}
+
+void setTone(int pin, int note, int duration) {
+  tone(pin, note, duration);
+  delay(duration);
+  noTone(pin);
+}
+
+void loop() {
+  setTone(buzzer_pin, Music.B, tempo * Length.one);
+  setTone(buzzer_pin, Music.E, tempo * Length.one_half);
+  setTone(buzzer_pin, Music.G, tempo * Length.half);
+  setTone(buzzer_pin, Music.F, tempo * Length.one);
+  setTone(buzzer_pin, Music.E, tempo * Length.two);
+  setTone(buzzer_pin, Music.B2, tempo * Length.one);
+  setTone(buzzer_pin, Music.A2, tempo * Length.two_half);
+  setTone(buzzer_pin, Music.Fs, tempo * Length.two_half);
+  
+  setTone(buzzer_pin, Music.E, tempo * Length.one_half);
+  setTone(buzzer_pin, Music.G, tempo * Length.half);
+  setTone(buzzer_pin, Music.F, tempo * Length.one);
+  setTone(buzzer_pin, Music.Ds, tempo * Length.two);
+  setTone(buzzer_pin, Music.F, tempo * Length.one);
+  setTone(buzzer_pin, Music.B, tempo * Length.two_half);
+  delay(500000);
+}
+
+
+</code>
+</pre>
+
+  </li>
+  <li><a href="https://streamable.com/2p8wct">Buzzer Video</a></li>
+</ul>
 
 
 </xmp>
