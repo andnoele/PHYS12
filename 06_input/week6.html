@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<title>PHYS S-12: Introduction to Digital Fabrication </title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="../style.css" rel="stylesheet">
-
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <div style="align-items: center; justify-content:center;" class="container-fluid">
-    <h3 class="nav-title"> PHYS S-12: Intro to Digital Fabrication</h3>
-    <div class="navbar-nav">
-      <h4><a class="nav-link" href="../index.html">Home</a></h4>
-      <h4><a class="nav-link" href="../finalproject.html">Final Project</a></h4>
-      <h4><a class="nav-link" href="../about.html">About</a></h4>
+<head>
+  <title>PHYS S-12: Introduction to Digital Fabrication </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div style="align-items: center; justify-content:center;" class="container-fluid">
+      <h3 class="nav-title"> PHYS S-12: Intro to Digital Fabrication</h3>
+      <div class="navbar-nav">
+        <h4><a class="nav-link" href="../index.html">Home</a></h4>
+        <h4><a class="nav-link" href="../finalproject.html">Final Project</a></h4>
+        <h4><a class="nav-link" href="../about.html">About</a></h4>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+
+</head>
 
 <body>
-
 
 <xmp style="display:none;">
 <br> 
@@ -42,7 +44,7 @@
 </ul>
 
 <h3>Graph</h3>
-<p>Insert Graph Later</p>
+ <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
 
 <h3>Water Table</h3>
 <table>
@@ -118,7 +120,7 @@
 </ul>
 
 <h3>Graph</h3>
-<p>Insert Graph Later</p>
+<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
 
 <h3>Table of Results</h3>
 <style>
@@ -224,5 +226,106 @@ tr:nth-child(even) {
 
 <script src="../strapdown.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+<script>
+      // console.log("checking")
+      const xValues = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5,4.0,4.5,5.0,5.5,6.0];
+      const yValues = [102290,16770,13077,11055,10090,9566,9050,8303,8220,8177,7880,7800,7800];
+
+      new Chart("myChart", {
+        type: "line",
+        data: {
+          labels: xValues,
+          datasets: [
+            {
+              fill: false,
+              lineTension: 0,
+              backgroundColor: "rgba(0,0,255,1.0)",
+              borderColor: "rgba(0,0,255,0.1)",
+              data: yValues,
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Water Sensor",
+            fontSize: 18,
+            fontColor: "#000",
+          },
+          legend: { display: false },
+          scales: {
+            xAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Added Water (mL)",
+                },
+              },
+            ],
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Arbitrary Arduino Values",
+                },
+                ticks: { min: 0, max: 103000 },
+              },
+            ],
+          },
+        },
+      });
+
+      console.log("checking")
+      const xValues2 = [0, 5, 10, 15, 20, 25, 30];
+      const yValues2 = [487, 437, 375, 204, 193, 190, 189];
+
+      new Chart("myChart1", {
+        type: "line",
+        data: {
+          labels: xValues2,
+          datasets: [
+            {
+              fill: false,
+              lineTension: 0,
+              backgroundColor: "rgba(0,0,255,1.0)",
+              borderColor: "rgba(0,0,255,0.1)",
+              data: yValues2,
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Water Sensor",
+            fontSize: 18,
+            fontColor: "#000",
+          },
+          legend: { display: false },
+          scales: {
+            xAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Added Water (mL)",
+                },
+              },
+            ],
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Arbitrary Arduino Values",
+                },
+                ticks: { min: 0, max: 500 },
+              },
+            ],
+          },
+        },
+      });
+  </script>
+  
+  <script>
+      
+  </script>
 
 </html>
