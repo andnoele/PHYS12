@@ -22,10 +22,131 @@
 <xmp style="display:none;">
 <h1>Week 9</h1>
 <h2>Introduction</h2>
+For the week nine assignment, we decided to control a stepper motor using a microcontroller controlled via wifi through Firebase. After lots of errors, experimentation, and assistance (thank you so much for that), the program finally worked. If you press one button, the stepper motor (when attached to my syringe mechanism in my final project) will move so that the syringe will release 1 ml of liquid. If you press the other button, the syringe will refill and take in 10 ml of liquid.
 
-<h2>Design</h2>
+<h2>Wiring</h2>
+<img src="https://lh4.googleusercontent.com/IIfCY711t1pPwl5wd789X5GhiF2wWbjiD8byL0yMi5rvPjn-VcHcgQxjWT57hgzRnoPahovn0jMNvTIvGlDvBBsKfLlZ7IzeepzC9jtCZcuiArKDmrm4HPfYKFw-0jKXOJBRWp10NlULb3NPl0CAW4E" alt="Wiring">
 
-<h2><a class="nav-link" href="./09_radio/firebase.html">Firebase</a></h2>
+<h2>Code</h2>
+<pre style="border:2px solid #BCBEC0; padding: 10px; font: 14px Monaco; width:70%; background: #f7f7f9;border-radius: 25px;">
+<code>
+  /*
+  Rui Santos
+  Complete project details at our blog.
+    - ESP32: https://RandomNerdTutorials.com/esp32-firebase-realtime-database/
+    - ESP8266: https://RandomNerdTutorials.com/esp8266-nodemcu-firebase-realtime-database/
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files.
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  Based in the RTDB Basic Example by Firebase-ESP-Client library by mobizt
+  https://github.com/mobizt/Firebase-ESP-Client/blob/main/examples/RTDB/Basic/Basic.ino
+*/
+
+#if defined(ESP32)
+#include <WiFi.h>
+#elif defined(ESP8266)
+#include <ESP8266WiFi.h>
+#endif
+#include <Firebase_ESP_Client.h>
+#include <Stepper.h>
+
+//Provide the token generation process info.
+#include "addons/TokenHelper.h"
+//Provide the RTDB payload printing info and other helper functions.
+#include "addons/RTDBHelper.h"
+
+// Insert your network credentials
+#define WIFI_SSID "MAKERSPACE"
+#define WIFI_PASSWORD "12345678"
+
+// Insert Firebase project API Key
+#define API_KEY "AIzaSyC0GzXUbzYGTMFW7XMus4HhFirm3JAJPvc"
+
+// Insert RTDB URLefine the RTDB URL */
+#define DATABASE_URL "https://esp32-stepper-motor-ef58a-default-rtdb.firebaseio.com/"
+
+//Define Firebase Data object
+FirebaseData fbdo;
+
+FirebaseAuth auth;
+FirebaseConfig config;
+
+unsigned long sendDataPrevMillis = 0;
+int count = 0;
+bool signupOK = false;
+String buttonState = "";
+
+const int stepsPerRevolution = 2048;
+
+// Creates an instance of stepper class
+// Pins entered in sequence IN1-IN3-IN2-IN4 for proper step sequence
+Stepper myStepper = Stepper(stepsPerRevolution, D7, D8, D9, D10);
+
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(300);
+  }
+  Serial.println();
+  Serial.print("Connected with IP: ");
+  Serial.println(WiFi.localIP());
+  Serial.println();
+
+  /* Assign the api key (required) */
+  config.api_key = API_KEY;
+
+  /* Assign the RTDB URL (required) */
+  config.database_url = DATABASE_URL;
+
+  /* Sign up */
+  if (Firebase.signUp(&config, &auth, "", "")) {
+    Serial.println("ok");
+    signupOK = true;
+  } else {
+    Serial.printf("%s\n", config.signer.signupError.message.c_str());
+  }
+
+  /* Assign the callback function for the long running token generation task */
+  config.token_status_callback = tokenStatusCallback;  //see addons/TokenHelper.h
+
+  Firebase.begin(&config, &auth);
+  Firebase.reconnectWiFi(true);
+}
+
+void loop() {
+  Firebase.RTDB.getString(&fbdo, "/BUTTON_STATUS");
+  buttonState = fbdo.to<String>();
+
+  if (buttonState == "ON") {
+    Serial.println("ON");
+    myStepper.setSpeed(5);
+    myStepper.step(160);
+    delay(100);
+    myStepper.step(0);
+    delay(100);
+    Firebase.RTDB.setString(&fbdo, "/BUTTON_STATUS", " ");
+  } else if (buttonState == "OFF") {
+    Serial.println("OFF");
+    myStepper.setSpeed(5);
+    myStepper.step(-160);
+    delay(100);
+    myStepper.step(0);
+    delay(100);
+    Firebase.RTDB.setString(&fbdo, "/BUTTON_STATUS", " ");
+  } else {
+    myStepper.step(0);
+    delay(100);
+  }
+}
+</code>
+</pre>
+
+
+<h2>Link to Firebase</h2>
+<h2><a class="nav-link" href="../09_radio/firebase.html">Firebase</a></h2>
 
 </xmp>
 </body>

@@ -4,12 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PHYSCI 70: Introduction to Digital Fabrication</title>
+    <style>
+        button{
+            background-color: cadetblue; /* Green */
+            border: none;
+            border-radius: 4px;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 24px;    
+            border: 1px solid antiquewhite;
+            display: grid;
+            margin: auto;
+            }
+    </style>
 </head>
 
 <body>
 
-     <button id="turn-on" name="turnon">Turn On</button>
-     <button id="turn-off" name="turnoff">Turn Off</button>
+     <button id="turn-on" name="turnon">Dispense (1 mL)</button>
+     <br></br>   
+     <button id="turn-off" name="turnoff">Refill</button>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
@@ -30,15 +47,6 @@
         appId: "1:821152317479:web:a3c513a3815258cc0ace02",
         measurementId: "G-MQHJXNLW3J"
     };
-
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-  
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
         // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
@@ -52,14 +60,14 @@ const analytics = getAnalytics(app);
     function turnOn(){
         console.log("turning on");
         ref.update({
-            "LED_STATUS": "ON"
+            "BUTTON_STATUS": "ON"
         });
     }
 
     function turnOff(){
         console.log("turning off");
         ref.update({
-            "LED_STATUS": "OFF"
+            "BUTTON_STATUS": "OFF"
         });
     }    
 </script>
