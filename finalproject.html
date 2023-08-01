@@ -300,23 +300,42 @@ tr:nth-child(even) {
 </ol>
 
 <h5>Printing Process</h5>
+The printing process was fairly straightforward. First, I printed out each of the small parts. Then, I cut out a panel 180 cm by 150 cm out of cardboard. Then I drew grid lines on it 1 cm apart so that I could figure out where each part needs to go. Then I modeled that in Fusion360 and printed out the parts. Each took roughly 5.5 hours to print. The syringe support was not correctly placed in the initial print, so it was broken off and glued back on at a later time. The syringe supports were removed from the comprehensive design and also attached at a later time.
+<img src="" alt="Prototype Panel">
 
 <h5>Final Product</h5>
+<img src="" alt="Final Panels">
 <!--<img src="" alt="">
 <a href="url">link text</a>
 -->
 
 <br></br>
-<h4>Vending Box</h4>
-<h5>Design</h5>
+<h4>Support</h4>
+<h5>Stand</h5>
+The main board is propped up by 2 support stands. They are made out of two triangles and two squares each. The sketch was then saved as a DXF and sent to the laser printer which cut the shapes out of wood. When prototyping, some of the wooden pieces were attached with double-sided tape, but that was eventually taken off and replaced with wood glue.
 
-<h5>Printing Process</h5>
+<h5>Board</h5>
+The board was made out of 3mm mood. First, I designed the shape in Fusion 360. This was done using the line tool and rectangle tool. Once all of the shapes were drawn out and I was satisfied with my design, I saved it as a DXF, then used the laser cutter to cut out my design. I then used sandpaper to sand down any rough edges. The 3D-printed panels and the board were attached to each other via M3 screws and nuts.
 
-<h5>Final Product</h5>
-<!--<img src="" alt="">
-<a href="url">link text</a>
---> 
+<h5>Side Panels</h5>
+Each side panel was drawn in Fusion360 using the rectangle tool. I then saved each shape as a DXF, sent them to the laser cutter, and printed them out. The shorter side panel turned out to be a little too long, so I just used the Japanese Pull Saw to get rid of the excess. Lastly, I attached them to the main board using wood glue.
 
+<h5>Top Panel</h5>
+This top panel was a little bit more difficult to create. I again created a Fusion 360 file. I duplicated the support board panel, except this time I changed around some of the measurements. The middle panel measurements were made to be smaller to ensure that they would fit back into the bigger panel even when attached by hinges. The bottom was also shortened to allow easy access to the syringes. This file was saved as a DXF, cut out of cardboard (prototyping), and then cut out of  3mm wood and attached to the main body with wood glue.
+
+<br></br>
+<h4>Firebase</h4>
+<h5>Wate Sensor</h5>
+The water sensor is attached to an ESP32 Xiao. This sensor is a capacitive sensor and was calibrated as part of a former assignment. There is a simple program to give the sensor reading and based on that sensor reading it will tell you how much water needs to be dispensed.
+
+<h5>pH Sensor</h5>
+The pH sensor is also attached to the ESP32 Xiao. This sensor was calibrated using a serial print function and then I wrote a simple program that gives that sensor reading and how much of which kind of fertilizer needs to be dispensed.
+
+<h5>Stepper Motors</h5>
+The three motors are attached to an ESP32 Dev. There is a program that connects to Firebase and a GitHub page. Based on the input on that website, the motors are told how much to move and therefore how many mL of liquid needs to come out of the syringe. There is also a button for refill that will take in 10 mL of liquid to completely refill the syringe.
+
+<h5>Webpage</h5>
+The webpage tells you the sensor reading, how much of each liquid to dispense, and how much is left in each syringe. Additionally, the webpage allows you to tell the motors how much liquid to release and when to refill.
 
 </xmp>
 </body>

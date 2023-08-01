@@ -23,10 +23,41 @@
 </head>
 
 <body>
+     <span id="water_reading"> </span>
+     <span id="d_w_value"> </span>
+     <span id="u_ml_left"> </span>
 
+     <h3>Nitrogen</h3>
      <button id="turn-on" name="turnon">Dispense (1 mL)</button>
      <br></br>   
      <button id="turn-off" name="turnoff">Refill</button>
+     <center>Amount of Nitrogen <br>
+        <input id="n-amount" style="width:100px; height:25px;"></input> 
+        <button id="submit-n">Submit</button>
+     </center>
+
+
+
+     <h3>Potassium</h3>
+     <button id="turn-on-k" name="turnonk">Dispense (1 mL)</button>
+     <br></br>   
+     <button id="turn-off-k" name="turnoffk">Refill</button>
+     <center>Amount of Potassium <br>
+        <input id="k-amount" style="width:100px; height:25px;"></input> 
+        <button id="submit-k">Submit</button>
+     </center>
+
+
+
+
+     <h3>Water</h3>
+     <button id="turn-on-h" name="turnonh">Dispense (1 mL)</button>
+     <br></br>   
+     <button id="turn-off-h" name="turnoffh">Refill</button>
+     <center>Amount of water <br>
+        <input id="water-amount" style="width:100px; height:25px;"></input> 
+        <button id="submit-water">Submit</button>
+     </center>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
@@ -53,9 +84,37 @@
     // Get a database reference to our blog
     var ref = firebase.database().ref("/");
 
+    const water_reading = document.getElementById("water_reading");
+    var dbwater_reading = firebase.database().ref().child('water_reading');
+    dbwater_reading.on('value', snap => {
+        water_reading.innerText = snap.val().toFixed(2);
+    });
+
+    const d_w_value = document.getElementById("d_w_value");
+    var db_d_w_value = firebase.database().ref().child('d_w_value');
+    db_d_w_value.on('value', snap => {
+        d_w_value.innerText = snap.val().toFixed(2);
+    });
+
+    const u_ml_left = document.getElementById("u_ml_left");
+    var db_u_ml_left = firebase.database().ref().child('u_ml_left');
+    db_u_ml_left.on('value', snap => {
+        u_ml_left.innerText = snap.val().toFixed(2);
+    });
+    
     // make the buttons call the function below 
     document.getElementById('turn-on').addEventListener('click', turnOn, false);
     document.getElementById('turn-off').addEventListener('click', turnOff, false);
+    document.getElementById('submit-n').addEventListener('click',sendNInfo, false);
+    
+
+    document.getElementById('turn-on-k').addEventListener('click', turnOnK, false);
+    document.getElementById('turn-off-k').addEventListener('click', turnOffK, false);
+    document.getElementById('submit-k').addEventListener('click',sendKInfo, false);
+
+    document.getElementById('turn-on-h').addEventListener('click', turnOnH, false);
+    document.getElementById('turn-off-h').addEventListener('click', turnOffH, false);
+    document.getElementById('submit-water').addEventListener('click',sendWaterInfo, false);
 
     function turnOn(){
         console.log("turning on");
@@ -63,11 +122,67 @@
             "BUTTON_STATUS": "ON"
         });
     }
-
     function turnOff(){
         console.log("turning off");
         ref.update({
             "BUTTON_STATUS": "OFF"
         });
     }    
+    function sendNInfo(){
+        console.log("sending N info");
+        var x = document.getElementById("n-amount").value;
+        console.log(x);
+        ref.update({
+            "N-AMOUNT" : x
+        });
+
+    }
+
+
+
+    function turnOnK(){
+        console.log("turning on");
+        ref.update({
+            "BUTTON_STATUS_K": "ON"
+        });
+    }
+    function turnOffK(){
+        console.log("turning off");
+        ref.update({
+            "BUTTON_STATUS_K": "OFF"
+        });
+    }  
+    function sendKInfo(){
+        console.log("sending K info");
+        var x = document.getElementById("k-amount").value;
+        console.log(x);
+        ref.update({
+            "K-AMOUNT" : x
+        });
+
+    }
+
+
+
+    function turnOnH(){
+        console.log("turning on");
+        ref.update({
+            "BUTTON_STATUS_H": "ON"
+        });
+    }
+    function turnOffH(){
+        console.log("turning off");
+        ref.update({
+            "BUTTON_STATUS_H": "OFF"
+        });
+    }
+    function sendWaterInfo(){
+        console.log("sending water info");
+        var x = document.getElementById("water-amount").value;
+        console.log(x);
+        ref.update({
+            "WATER-AMOUNT" : x
+        });
+
+    }
 </script>
