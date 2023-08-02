@@ -27,6 +27,12 @@
      <span id="d_w_value"> </span>
      <span id="u_ml_left"> </span>
 
+     <span id="pH_Value"> </span>
+     <span id="d_n_value"> </span>
+     <span id="n_ml_left"> </span>
+     <span id="d_k_value"> </span>
+     <span id="k_ml_left"> </span>
+
      <h3>Nitrogen</h3>
      <button id="turn-on" name="turnon">Dispense (1 mL)</button>
      <br></br>   
@@ -101,6 +107,39 @@
     db_u_ml_left.on('value', snap => {
         u_ml_left.innerText = snap.val().toFixed(2);
     });
+
+
+
+    const wpH_Value = document.getElementById("pH_Value");
+    var dbpH_Value = firebase.database().ref().child('pH_Value');
+    dbpH_Value.on('value', snap => {
+        pH_Value.innerText = snap.val().toFixed(2);
+    });
+
+    const d_n_value = document.getElementById("d_n_value");
+    var db_d_n_value = firebase.database().ref().child('d_n_value');
+    db_d_n_value.on('value', snap => {
+        d_n_value.innerText = snap.val().toFixed(2);
+    });
+
+    const n_ml_left = document.getElementById("n_ml_left");
+    var db_n_ml_left = firebase.database().ref().child('n_ml_left');
+    db_n_ml_left.on('value', snap => {
+        n_ml_left.innerText = snap.val().toFixed(2);
+    });
+
+    const d_k_value = document.getElementById("d_k_value");
+    var db_d_k_value = firebase.database().ref().child('d_k_value');
+    db_d_k_value.on('value', snap => {
+        d_k_value.innerText = snap.val().toFixed(2);
+    });
+
+    const k_ml_left = document.getElementById("k_ml_left");
+    var db_k_ml_left = firebase.database().ref().child('k_ml_left');
+    db_k_ml_left.on('value', snap => {
+        k_ml_left.innerText = snap.val().toFixed(2);
+    });
+
     
     // make the buttons call the function below 
     document.getElementById('turn-on').addEventListener('click', turnOn, false);
