@@ -343,7 +343,7 @@ The water sensor is attached to an ESP32 Xiao. This sensor is a capacitive senso
 <br></br>
 <pre style="border:2px solid #BCBEC0; padding: 10px; font: 14px Monaco; width:70%; background: #f7f7f9;border-radius: 25px;">
   <code>
-    #include <WiFi.h>
+#include <WiFi.h>
 #include <Firebase_ESP_Client.h>
 
 //Provide the token generation process info.
@@ -383,15 +383,25 @@ int amountToDispense;
 int amountToDispense_K;
 int amountToDispense_N;
 
+int u_ml_left = 10;
+
 int sum = 0;
 
 String waterAmount;
 String kAmount;
 String nAmount;
 
+int pH_value; 
+int pH_Value = A1; 
+int d_n_value;
+int d_k_value;
+int n_ml_left = 10;
+int k_ml_left = 10;
+String p_syringe;
 
 void setup() {
   Serial.begin(115200);
+  pinMode(pH_Value, INPUT); 
   pinMode(soilPin, INPUT);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("Connecting to Wi-Fi");
@@ -459,68 +469,170 @@ long checkingLevel (int water_level){
   if (water_level >= 485) {
     //print to dispense 10 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 10);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 10);
     
   }
 
   else if((485)>water_level>=(474)){
     //print to dispense 9 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 9);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 1);
   }
 
   else if((474) > water_level >= (463)){
     //print to dispense 8 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 8);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 2);
   }
 
   else if((452) > water_level >= (441)){
     //print to dispense 7 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 7);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 3);
   }
 
   else if((441)>water_level >= (430)){
     //print to dispense 6 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 6);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 4);
   }
 
   else if((430)>water_level >= (419)){
     //print to dispense 5 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 5);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 5);
   }
 
   else if((419)>water_level >= (408)){
     //print to dispense 4 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 4);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 6);
   }
 
   else if((408)>water_level >= (397)){
     //print to dispense 3 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 3);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 7);
   }
 
   else if((397)>water_level >= (386)){
     //print to dispense 2 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 2);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 8);
   }
 
   else if((386)>water_level >=(375)){
     //print to dispense 1 ml
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 9);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 1);
   }
 
   else if (water_level< (375)) {
     Firebase.RTDB.setInt(&fbdo, "/d_w_value", 0);
-    Firebase.RTDB.setInt(&fbdo, "/u_ml_left", 10);
 }
+  u_ml_left -= Firebase.RTDB.getInt(&fbdo, "/d_w_value");
+  Firebase.RTDB.setInt(&fbdo, "/u_ml_left", u_ml_left);
+}
+
+
+
+
+long checkingpHLevel (int pH_value){
+ // pH_Value = read the state of the sensor
+  int pH_Value = analogRead(A1); 
+  Serial.println(pH_Value); 
+  delay(500); 
+
+  if (pH_Value >= 708) {
+    //print to dispense 10 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 6);
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Potassium");
+  }
+
+  else if((708)>pH_Value>=(700)){
+    //print to dispense 9 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 5);
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Potassium");
+  }
+
+  else if((700) > pH_Value >= (692)){
+    //print to dispense 8 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 4);
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Potassium");
+  }
+
+  else if((692) > pH_Value >= (684)){
+    //print to dispense 7 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 3);
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Potassium");
+  }
+
+  else if((684)> pH_Value >= (676)){
+    //print to dispense 6 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 2);
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Potassium");
+  }
+
+  else if((676)> pH_Value >= (668)){
+    //print to dispense 5 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 1);
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Potassium");
+  }
+
+  else if((668)> pH_Value >= (660)){
+    //print to dispense 4 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 0);
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Neither");
+  }
+
+  else if((660)> pH_Value >= (652)){
+    //print to dispense 3 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 1);
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Nitrogen");
+  }
+
+  else if((652)>pH_Value >= (644)){
+    //print to dispense 2 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 2);
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Nitrogen");
+  }
+
+  else if((644)>pH_Value >=(636)){
+    //print to dispense 1 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 3);
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Nitrogen");
+  }
+
+    else if((636)>pH_Value >=(628)){
+    //print to dispense 1 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 4);
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Nitrogen");
+  }
+
+    else if((628)>pH_Value >=(620)){
+    //print to dispense 1 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 5);
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Nitrogen");
+  }
+
+    else if((620)>pH_Value >=(612)){
+    //print to dispense 1 ml
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 6);
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Nitrogen");
+  }
+
+  else if (pH_Value< (612)) {
+    Firebase.RTDB.setInt(&fbdo, "/d_n_value", 7);
+    Firebase.RTDB.setInt(&fbdo, "/d_k_value", 0);
+    Firebase.RTDB.setString(&fbdo, "/p_syringe", "Nitrogen");
+}
+n_ml_left -= Firebase.RTDB.getInt(&fbdo, "/d_n_value");
+Firebase.RTDB.setInt(&fbdo, "/n_ml_left", n_ml_left);
+k_ml_left -= Firebase.RTDB.getInt(&fbdo, "/d_k_value");
+Firebase.RTDB.setInt(&fbdo, "/k_ml_left", k_ml_left);
 }
   </code>
 </pre>

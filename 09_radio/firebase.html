@@ -19,51 +19,112 @@
             display: grid;
             margin: auto;
             }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .readings{
+            margin-left: 5px;
+            align-items: left;
+            text-align: left;
+        }
+
+        .actions-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .actions_n {  
+            align-items: center; 
+            margin-left: -470px;
+            text-align:left; }
+
+        .actions_k {  
+            align-items: center; 
+            margin-left: 300px; 
+            text-align:left; }
+
+        .actions_w {
+            align-items: center;
+            text-align: left;
+            margin-top:  475px;
+            margin-left: -630px;
+        }
+
     </style>
 </head>
 
 <body>
-     <span id="water_reading"> </span>
-     <span id="d_w_value"> </span>
-     <span id="u_ml_left"> </span>
+    <h1>Plant Vending Machine</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Mansur-banner.jpeg/1280px-Mansur-banner.jpeg" >
 
-     <span id="pH_Value"></span>
-     <span id="d_n_value"></span>
-     <span id="n_ml_left"></span>
-     <span id="d_k_value"></span>
-     <span id="k_ml_left"></span>
- 
-     <h3>Nitrogen</h3>
-     <button id="turn-on" name="turnon">Dispense (1 mL)</button>
-     <br></br>   
-     <button id="turn-off" name="turnoff">Refill</button>
-     <center>Amount of Nitrogen <br>
-        <input id="n-amount" style="width:100px; height:25px;"></input> 
-        <button id="submit-n">Submit</button>
-     </center>
+    <div class = "container">
+        <div class = "readings">
+         <h3>pH Sensor Readings</h3>
+         <p>pH Value: </p><span id="pH_Value"></span>
+         <br><br>
+         <p>Nitrogen Dispense Value (mL): </p><span id="d_n_value"></span>
+         <br><br>
+         <p>Nitrogen mL left: </p><span id="n_ml_left"></span>
+         <br><br>
+         <p>Potassium Dispense Value (mL): </p><span id="d_k_value"></span>
+         <br><br>
+         <p>Potassium mL left: </p><span id="k_ml_left"></span>
+         <br><br>
+
+         <h3>Water Sensor Readings</h3>
+         <p>Water Reading: </p><span id="water_reading"> </span>
+         <br><br>
+         <p>Dispense Value (mL): </p><span id="d_w_value"> </span>
+         <br><br>
+         <p>mL left: </p><span id="u_ml_left"> </span>
+         <br><br>
+        </div>
+
+        <div class="actions-container">
+            <div class="actions_n">
+                 <h3>Nitrogen</h3> 
+                 
+                 <center>Amount of Nitrogen <br>
+                    <input id="n-amount" style="width:100px; height:25px;"></input>
+                    <br></br> 
+                    <button id="submit-n">Submit</button>
+                 </center>
+                 <br></br>
+                 <button id="turn-on" name="turnon">Dispense</button>
+                 <br></br>
+                 <button id="turn-off" name="turnoff">Refill</button>
+            </div>
+
+            <div class="actions_k">
+                 <h3>Potassium</h3>
+                 <center>Amount of Potassium <br>
+                    <input id="k-amount" style="width:100px; height:25px;"></input> 
+                    <br></br>
+                    <button id="submit-k">Submit</button>
+                 </center>
+                 <br></br>
+                 <button id="turn-on-k" name="turnonk">Dispense</button>
+                 <br></br>   
+                 <button id="turn-off-k" name="turnoffk">Refill</button>
+            </div>
 
 
-
-     <h3>Potassium</h3>
-     <button id="turn-on-k" name="turnonk">Dispense (1 mL)</button>
-     <br></br>   
-     <button id="turn-off-k" name="turnoffk">Refill</button>
-     <center>Amount of Potassium <br>
-        <input id="k-amount" style="width:100px; height:25px;"></input> 
-        <button id="submit-k">Submit</button>
-     </center>
-
-
-
-
-     <h3>Water</h3>
-     <button id="turn-on-h" name="turnonh">Dispense (1 mL)</button>
-     <br></br>   
-     <button id="turn-off-h" name="turnoffh">Refill</button>
-     <center>Amount of water <br>
-        <input id="water-amount" style="width:100px; height:25px;"></input> 
-        <button id="submit-water">Submit</button>
-     </center>
+            <div class="actions_w">
+                 <h3>Water</h3>
+                 <center>Amount of water <br>
+                    <input id="water-amount" style="width:100px; height:25px;"></input> 
+                    <br></br> 
+                    <button id="submit-water">Submit</button>
+                 </center>
+                 <br></br> 
+                 <button id="turn-on-h" name="turnonh">Dispense</button>
+                 <br></br>   
+                 <button id="turn-off-h" name="turnoffh">Refill</button>
+            </div>
+        </div>
+    </div>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
