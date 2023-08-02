@@ -27,12 +27,12 @@
      <span id="d_w_value"> </span>
      <span id="u_ml_left"> </span>
 
-     <span id="pH_Value"> </span>
-     <span id="d_n_value"> </span>
-     <span id="n_ml_left"> </span>
-     <span id="d_k_value"> </span>
-     <span id="k_ml_left"> </span>
-
+     <span id="pH_Value"></span>
+     <span id="d_n_value"></span>
+     <span id="n_ml_left"></span>
+     <span id="d_k_value"></span>
+     <span id="k_ml_left"></span>
+ 
      <h3>Nitrogen</h3>
      <button id="turn-on" name="turnon">Dispense (1 mL)</button>
      <br></br>   
@@ -110,7 +110,7 @@
 
 
 
-    const wpH_Value = document.getElementById("pH_Value");
+    const pH_Value = document.getElementById("pH_Value");
     var dbpH_Value = firebase.database().ref().child('pH_Value');
     dbpH_Value.on('value', snap => {
         pH_Value.innerText = snap.val().toFixed(2);
